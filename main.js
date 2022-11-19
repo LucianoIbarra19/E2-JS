@@ -1,6 +1,7 @@
 const inputNum = document.getElementById('input-num')
-const formList = document.getElementsByClassName('form-list')
+const formList = document.getElementById('form-list')
 const formBtn = document.getElementById('button')
+const pizzaContainer = document.getElementById('idPizza')
 
 const Pizzas = [
     {
@@ -47,8 +48,27 @@ const Pizzas = [
     }
 ]
 
-const sendForm = (formBtn) => {
-    console.log('ME ESTOY LLAMANDO')
+const sendForm = (e) => {
+    e.preventDefault()
+    const SEARCHINPUT = inputNum.value
+    console.log(`ESTOY LLAMANDO AL ${SEARCHINPUT}`)
 }
 
-formBtn.addEventListener('click', sendForm)
+const init = () => {
+    formList.addEventListener('submit', sendForm)
+}
+
+init()
+
+const pizzaId = (Pizzas) => {
+    if (inputNum.value === Pizzas.id) {
+        return `<h2>${Pizzas.nombre}</h2>
+                <h3>${Pizzas.precio}</h3>`
+    }
+}
+
+const PizzasHtml = Pizzas.map((Pizzas) => pizzaId(Pizzas)).join('')
+
+pizzaId.innerHTML = PizzasHtml
+
+pizzaContainer.addEventListener('submit', sendForm)
