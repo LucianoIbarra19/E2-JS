@@ -48,27 +48,39 @@ const Pizzas = [
     }
 ]
 
+const renderPizza = (Pizzas) => {
+    if (!Pizzas) {
+        console.log('no existe la pizza')
+    } else {
+        pizzaContainer.innerHTML = `
+        <div>
+            <h2>${Pizzas.nombre}</h2>
+            <h3>${Pizzas.precio}</h3>
+        </div>
+        `
+    }
+}
+
+const searchPizza = (value) => Pizzas.find((pizzas) => pizzas.id === value)
+
+const muestraError = () => {
+    console.log('error')
+}
+
 const sendForm = (e) => {
     e.preventDefault()
     const SEARCHINPUT = inputNum.value
+    const searchedPizza = searchPizza(Number(SEARCHINPUT))
+    renderPizza(searchedPizza)
+    if (SEARCHINPUT) {
+        muestraError(SEARCHINPUT)
+    }
     console.log(`ESTOY LLAMANDO AL ${SEARCHINPUT}`)
 }
+
 
 const init = () => {
     formList.addEventListener('submit', sendForm)
 }
 
 init()
-
-const pizzaId = (Pizzas) => {
-    if (inputNum.value === Pizzas.id) {
-        return `<h2>${Pizzas.nombre}</h2>
-                <h3>${Pizzas.precio}</h3>`
-    }
-}
-
-const PizzasHtml = Pizzas.map((Pizzas) => pizzaId(Pizzas)).join('')
-
-pizzaId.innerHTML = PizzasHtml
-
-pizzaContainer.addEventListener('submit', sendForm)
